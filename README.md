@@ -14,8 +14,12 @@ Features
  - [ ] Camera controls
  - [ ] Procedurally generated maps
  - [ ] AI workers
- - [ ] Jobs
-    - [ ] Builder
-    - [ ] Farmer
-    - [ ] Teacher
-    - [ ] 
+ - [ ] Buildings
+    - [ ] House (small, med, large)
+    - [ ] Forestry
+    - [ ] Masons
+    - [ ] Miners
+    - [ ] School
+    - [ ] Farm
+    - [ ] Fishery
+    - [ ] Hunting Lodge
