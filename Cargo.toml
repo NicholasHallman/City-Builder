@@ -5,6 +5,7 @@ edition = "2021" # this needs to be 2021, or you need to set "resolver=2"
 
 [dependencies]
 bevy = "0.7.0"
+noise = "0.7.0"
 
 [workspace]
 resolver = "2" # Important! wgpu/Bevy needs this!
