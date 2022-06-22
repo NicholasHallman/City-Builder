@@ -1,7 +1,7 @@
 mod terrain_gen;
-use terrain_gen::{gen_terrain};
+use terrain_gen::{gen_terrain_mesh};
 use std::f32::consts::PI;
-use bevy::{prelude::*, input::mouse::MouseMotion};
+use bevy::{prelude::*, input::mouse::MouseMotion, render::mesh::PrimitiveTopology};
 
 fn main() {
     App::new()
@@ -24,9 +24,11 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
+    let map = gen_terrain_mesh(200);
+
     // plane
     commands.spawn_bundle(PbrBundle {
-        mesh: meshes.add(Mesh::from(shape::Plane {size: 5.0})),
+        mesh: meshes.add(map),
         material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
         ..default()
     });
@@ -57,11 +59,6 @@ fn setup(
         transform: Transform::from_xyz(4.0, 8.0, 4.0),
         ..default()
     });
-    // noise test
-    let map = gen_terrain(200);
-    for x in 0..32 {
-        print!("{:?}\n", map[x])
-    }
 }
 
 fn key_controller(mut keys: Res<Input<KeyCode>>, 
