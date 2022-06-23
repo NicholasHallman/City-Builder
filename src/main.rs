@@ -26,10 +26,18 @@ fn setup(
 ) {
     let map = gen_terrain_mesh(200);
 
-    // plane
+    // world
     commands.spawn_bundle(PbrBundle {
         mesh: meshes.add(map),
         material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
+        transform: Transform::from_xyz(-32.0, 0.0, -32.0),
+        ..default()
+    });
+
+    // water
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Plane {size: 100.0})),
+        material: materials.add(Color::rgb(0.0, 0.5, 0.8).into()),
         ..default()
     });
  
@@ -49,14 +57,15 @@ fn setup(
         })
         .insert(Camera {});
     });
-    // light
-    commands.spawn_bundle(PointLightBundle {
-        point_light: PointLight {
-            intensity: 1500.0,
-            shadows_enabled: true,
-            ..default()
-        },
-        transform: Transform::from_xyz(4.0, 8.0, 4.0),
+
+    // sun
+    commands.spawn_bundle(DirectionalLightBundle {
+        // directional_light: DirectionalLight {
+        //     color: Color::rgb(0.8, 0.8, 0.0),
+        //     illuminance: 1000.0,
+        //     ..default()
+        // },
+        transform: Transform::from_rotation(Quat::from_euler(EulerRot::XYZ, PI + (PI / 3.0), 0.0, 0.0)),
         ..default()
     });
 }
@@ -105,7 +114,7 @@ fn mouse_move(mut mouse_motion_events: EventReader<MouseMotion>,
         match some_event{
             Some(event) => {
                 transform.rotate_around(Vec3::ZERO, Quat::from_euler(EulerRot::XYZ, 0.0, event.delta.x / 100.0, 0.0));
-                transform.look_at(Vec3::ZERO, Vec3::Y);
+                transform.look_at(Vec3::new(0.0, 1.0, 0.0), Vec3::Y);
             },
             None => return
         }
